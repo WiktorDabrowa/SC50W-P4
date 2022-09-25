@@ -1,5 +1,28 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+    <div id="post_form">
+        <form action='' method='post'>
+            {% csrf_token %}
+            {{post_form}}
+            <input type='submit' value="Post">
+        </form>
+    </div>
+    <div id='feed'>
+    {% for post in posts %}
+        <div class='post'>
+            <div class='poster'>
+                <p>
+                <a href=''>{{post.poster}}</a> 
+                |{{post.timestamp}}
+                </p>
+            </div>
+            <div class='post_body'>
+                <p>{{post.body}}
+            </div>
+            <p>{{post.likes}}
+        </div>
+    {% endfor %}
+
+
 {% endblock %}

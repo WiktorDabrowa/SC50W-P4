@@ -1,0 +1,15 @@
+1. NEW POST
+2. ALL POSTS
+  (username/content/timestamp/likes)
+3.PROFILE PAGE
+  (username/followers/follows/
+   user`s posts/Follow Button)
+4.FOLLOWING
+5.PAGINATION
+  (10 posts at the time/
+   NEXT/PREVIOUS button{if neccesary})
+6. EDIT POST
+  (on every post/post -> textarea
+  ensure only OP can edit)
+7. likes
+  (JS -> no page reload)

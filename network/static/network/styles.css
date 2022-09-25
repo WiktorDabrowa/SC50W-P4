@@ -1,0 +1,33 @@
+
+#id_body {
+  border-radius: 5px;
+  width: 400px;
+  transition-duration: 1s;
+  resize: none;
+  height: 150px;
+}
+#post_form {
+  padding: 20px;
+  justify-content: center;
+  text-align:center;
+
+}
+#id_body:focus {
+  width: 700px;
+  height: 300px;
+}
+#feed {
+  padding:0 300px 0 300px;
+  background-color: aqua;
+}
+.post {
+  background-color: aquamarine;
+}
+a {
+  color:black;
+}
+a:hover {
+  color:black;
+  text-decoration: none;
+  color:blue
+}
