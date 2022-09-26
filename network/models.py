@@ -4,8 +4,12 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
-
+    is_following = models.ManyToManyField('self')
+    followers = models.ManyToManyField('self')
+    
+    def __str__(self):
+        return f'{self.username}'
+    
 class Post(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     timestamp = models.DateTimeField(auto_now_add=True)

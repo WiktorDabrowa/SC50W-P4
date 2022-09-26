@@ -1,5 +1,7 @@
 
-
+hr {
+  margin-top:0
+}
 #post_form_container {
   padding: 20px;
   justify-content: center;
@@ -11,9 +13,10 @@
   width: 400px;
   transition-duration: 1s;
   resize: none;
-  height: 150px;
+  height: 50px;
   display:block;
   border-bottom:none;
+  
 }
 #post_form_html {
   display:flex;
@@ -58,9 +61,17 @@
 }
 .poster{
   font-size: smaller;
+  margin-bottom: none;
+
+}
+.poster_text {
+  margin-bottom: 0;
 }
 .post_body {
   font-size: larger;
+}
+.post_body_text {
+  margin: 0 0 0 0;
 }
 .post_likes {
   bottom:0px;
@@ -68,6 +79,7 @@
   position:relative;
   display:flex;
   flex-direction: row;
+  margin-top:0;
 }
 .like_button {
   height:25px;
@@ -83,18 +95,34 @@
   color: blue;
   border: none
 }
+.like_button:active {
+  transform: scale(1.25);
+  color: blue;
+  border: none;
+  outline: 0;
+}
+.like_button:focus {
+  outline: none;
+}
 .likes {
   position:absolute;
   left:30px;
   padding-left:5px;
 }
-a {
+.profile_link {
   color:black;
   transition-duration: 0.5s;
 }
-a:hover {
+.profile_link:hover {
   color:black;
   text-decoration: none;
   color:blue;
-  transform: scale(1.20);
+  transform: scale(2);
+}
+
+.profile_info {
+  display:block;
+  height: 100px;
+  width:100%;
+  background-color: aquamarine;
 }

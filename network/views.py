@@ -17,6 +17,7 @@ def index(request):
             post = form.save(commit=False)
             post.poster = request.user
             form.save()
+            print('Succes')
             return HttpResponseRedirect(reverse("index")) 
             
     posts = Post.objects.all()
@@ -77,3 +78,18 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+def profile_page(request, user_name):
+    if request.method == 'POST':
+        print('Here')
+    user = User.objects.get(username=user_name)
+    followers = len(user.followers.all())
+    following = len(user.is_following.all())
+    posts = user.posts.all()
+    context = {
+        'user':user,
+        'followers':followers,
+        'following':following,
+        'posts':posts
+    }
+    return render(request, 'network/profile.html', context)

@@ -1,0 +1,33 @@
+{% extends "network/layout.html" %}
+{% block body %}
+
+
+<div class='profile_info'>
+<h1>{{user.username}} | Followers: {{followers}} | Following: {{following}}</h1>
+<button type='submit' action='{% url 'profile' user.username %}' method='post' class='follow_button'>Follow</button>
+</div>
+
+
+<div id='feed'>
+{% for post in posts %}
+  <div class='post'>
+      <div class='poster'>
+          <p class='poster_text'>
+          <a href='{% url 'profile'  post.poster %}' class='profile_link'>{{post.poster}}</a> 
+          |{{post.timestamp}}
+          </p>
+      </div>
+      <hr>
+      <div class='post_body'>
+          <p class='post_body_text'>{{post.body}}
+      </div>
+      <hr>
+      <div class='post_likes'>
+          <button class='like_button' id='like_button_'>Like</button>
+          <p class='likes'>{{post.likes}}</p>
+      </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

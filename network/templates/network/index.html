@@ -12,20 +12,22 @@
     {% for post in posts %}
         <div class='post'>
             <div class='poster'>
-                <p>
-                <a href=''>{{post.poster}}</a> 
+                <p class='poster_text'>
+                <a href='{% url 'profile'  post.poster %}' class='profile_link'>{{post.poster}}</a> 
                 |{{post.timestamp}}
                 </p>
             </div>
+            <hr>
             <div class='post_body'>
-                <p>{{post.body}}
+                <p class='post_body_text'>{{post.body}}
             </div>
+            <hr>
             <div class='post_likes'>
                 <button class='like_button' id='like_button_'>Like</button>
                 <p class='likes'>{{post.likes}}</p>
             </div>
         </div>
     {% endfor %}
-
+    </div>
 
 {% endblock %}
