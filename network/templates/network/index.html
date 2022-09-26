@@ -1,11 +1,11 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    <div id="post_form">
-        <form action='' method='post'>
+    <div id="post_form_container">
+        <form action='' method='post' id='post_form_html'>
             {% csrf_token %}
             {{post_form}}
-            <input type='submit' value="Post">
+            <input type='submit' value="Post" id='post_button'>
         </form>
     </div>
     <div id='feed'>
@@ -20,7 +20,10 @@
             <div class='post_body'>
                 <p>{{post.body}}
             </div>
-            <p>{{post.likes}}
+            <div class='post_likes'>
+                <button class='like_button' id='like_button_'>Like</button>
+                <p class='likes'>{{post.likes}}</p>
+            </div>
         </div>
     {% endfor %}
 

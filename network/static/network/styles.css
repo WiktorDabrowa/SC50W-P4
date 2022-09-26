@@ -1,33 +1,100 @@
 
+
+#post_form_container {
+  padding: 20px;
+  justify-content: center;
+  display:flex;
+  background-color: whitesmoke;
+}
 #id_body {
-  border-radius: 5px;
+  border-radius:5px 5px 0 0 ;
   width: 400px;
   transition-duration: 1s;
   resize: none;
   height: 150px;
+  display:block;
+  border-bottom:none;
 }
-#post_form {
-  padding: 20px;
+#post_form_html {
+  display:flex;
   justify-content: center;
-  text-align:center;
+  flex-direction: column;
+  box-shadow: 0 0 5px gray;
+  border-radius: 5px;
+}
+#post_button {
+  border-radius: 0 0 5px 5px;
+  border:1px solid gray;
+  border-top:none;
+  position: relative;
 
 }
 #id_body:focus {
-  width: 700px;
-  height: 300px;
+  width: 500px;
+  height: 200px;
+  font-size:larger;
+  padding: 10px 30px 10px 30px;
+  outline:none
 }
 #feed {
   padding:0 300px 0 300px;
-  background-color: aqua;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
 }
 .post {
-  background-color: aquamarine;
+  background-color: white;
+  box-shadow:0 0 5px gray;
+  width:500px;
+  height:auto;
+  min-height: 100px;
+  margin:10px;
+  overflow-wrap: break-word;
+  padding: 5px 10px 0 10px;
+  border-radius:7px;
+  border: 1px solid gray;
+}
+.poster{
+  font-size: smaller;
+}
+.post_body {
+  font-size: larger;
+}
+.post_likes {
+  bottom:0px;
+  height:25px;
+  position:relative;
+  display:flex;
+  flex-direction: row;
+}
+.like_button {
+  height:25px;
+  border:none;
+  border-radius:0 5px 0 5px;
+  position:absolute;
+  left:-10px;
+  background-color: transparent;
+  transition-duration: 0.5s;
+}
+.like_button:hover {
+  transform: scale(1.10);
+  color: blue;
+  border: none
+}
+.likes {
+  position:absolute;
+  left:30px;
+  padding-left:5px;
 }
 a {
   color:black;
+  transition-duration: 0.5s;
 }
 a:hover {
   color:black;
   text-decoration: none;
-  color:blue
+  color:blue;
+  transform: scale(1.20);
 }
