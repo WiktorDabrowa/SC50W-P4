@@ -8,10 +8,9 @@ import json
 from .models import User, Post
 from .forms import PostForm
 
-
 def index(request):
     post_form = PostForm()
-    
+    # Proccesing new posts
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -85,9 +84,11 @@ def profile_page(request, user_id):
     followers = len(user.followers.all())
     following = len(user.is_following.all())
     posts = user.posts.all()
+    # Checking to see if follow button should be displayed
     same_user = False
     if request.user == user:
         same_user = True
+    # Checking if requesting user is already following 
     if request.user in user.followers.all():
         follow = True
     else:
@@ -100,18 +101,40 @@ def profile_page(request, user_id):
         'follow':follow,
         'same_user': same_user
     }
+    # Follow/Unfollow:
     if request.method == 'PUT':
         data = json.loads(request.body)
         follower = request.user
         if data['follow'] == False:
-            print('You are not following this user')
+            # Adding selected user to your is_following list
+            # and your account to his followers list
             user.followers.add(request.user)
             follower.is_following.add(user)
-            print('But now you are!')
         else:
-            print('You are following this user')
+            # Removing selected user to your is_following list
+            # and your account to his followers list
             user.followers.remove(request.user)
             follower.is_following.remove(user)
-            print('And now you are not!')
         return render(request, 'network/profile.html', context)
     return render(request, 'network/profile.html', context)
+
+def following(request):
+    post_form = PostForm()
+    # Proccesing new posts
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.poster = request.user
+            form.save()
+            print('Succes')
+            return HttpResponseRedirect(reverse("index"))
+        
+    user = request.user
+    following = user.is_following.all()
+    posts = Post.objects.get(id in following)
+    context = {
+        'post_form': post_form,
+        'posts': posts
+    }
+    return render(request,'network/index.html', context)
