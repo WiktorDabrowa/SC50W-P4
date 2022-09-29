@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
+import json
 
 from .models import User, Post
 from .forms import PostForm
@@ -84,9 +85,9 @@ def profile_page(request, user_id):
     followers = len(user.followers.all())
     following = len(user.is_following.all())
     posts = user.posts.all()
-    if request.method == 'PUT':
-        print('Here')
-        return HttpResponse(status=204)
+    same_user = False
+    if request.user == user:
+        same_user = True
     if request.user in user.followers.all():
         follow = True
     else:
@@ -97,19 +98,20 @@ def profile_page(request, user_id):
         'following':following,
         'posts':posts,
         'follow':follow,
+        'same_user': same_user
     }
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        follower = request.user
+        if data['follow'] == False:
+            print('You are not following this user')
+            user.followers.add(request.user)
+            follower.is_following.add(user)
+            print('But now you are!')
+        else:
+            print('You are following this user')
+            user.followers.remove(request.user)
+            follower.is_following.remove(user)
+            print('And now you are not!')
+        return render(request, 'network/profile.html', context)
     return render(request, 'network/profile.html', context)
-
-def follow(request,user_id):
-    if request.method == 'PUT':
-        following = request.user
-        followed = User.objects.get(id = user_id)
-        followed.followers.add(following)
-        following.is_following.add(followed)
-        return 
-def unfollow(request,user_id):
-    if request.method == 'PUT':
-        following = request.user
-        followed = User.objects.get(id = user_id)
-        followed.followers.remove(following)
-        following.is_following.remove(followed)

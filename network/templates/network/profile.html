@@ -1,19 +1,18 @@
 {% extends "network/layout.html" %}
+
+
 {% block body %}
-
-
+<div id='user_id' class='hidden'>{{user.id}}</div>
 <div class='profile_info'>
 <h1>{{user.username}} | Followers: {{followers}} | Following: {{following}}</h1>
-{% if follow %}
-<form display='none' id='follow_form'>
-  <input name='follow' value='unfollow' type='hidden' disabled>
-</form>
-<button form='follow_form' type='submit' action='{% url 'profile' user.username %}' method='put' class='follow_button'>Unfollow</button>
-{% else %}
-<form display='none' id='follow_form'>
-  <input name='follow' value='follow' type='hidden' disabled>
-</form>
-<button form='follow_form' type='submit' action='{% url 'profile' user.username %}' method='put' class='follow_button'>Follow</button>
+{% if not same_user %}
+  {% if follow %}
+  {% csrf_token %}
+  <button class='follow_button'>Unfollow</button>
+  {% else %}
+  {% csrf_token %}
+  <button class='follow_button'>Follow</button>
+  {% endif %}
 {% endif %}
 </div>
 
@@ -23,7 +22,7 @@
   <div class='post'>
       <div class='poster'>
           <p class='poster_text'>
-          <a href='{% url 'profile'  post.poster %}' class='profile_link'>{{post.poster}}</a> 
+          <a href='{% url 'profile'  post.poster.id %}' class='profile_link'>{{post.poster}}</a> 
           |{{post.timestamp}}
           </p>
       </div>

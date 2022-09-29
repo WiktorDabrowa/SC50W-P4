@@ -4,8 +4,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    is_following = models.ManyToManyField('self')
-    followers = models.ManyToManyField('self')
+    is_following = models.ManyToManyField('self', symmetrical=False, related_name='followed_by')
+    followers = models.ManyToManyField('self', symmetrical=False)
     
     def __str__(self):
         return f'{self.username}'
