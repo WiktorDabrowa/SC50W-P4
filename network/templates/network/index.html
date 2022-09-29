@@ -13,8 +13,8 @@
         <div class='post'>
             <div class='poster'>
                 <p class='poster_text'>
-                <a href='{% url 'profile'  post.poster %}' class='profile_link'>{{post.poster}}</a> 
-                |{{post.timestamp}}
+                <a href='{% url 'profile'  post.poster.id %}' class='profile_link'>{{post.poster}}</a> 
+                | {{post.timestamp}}
                 </p>
             </div>
             <hr>

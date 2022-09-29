@@ -4,7 +4,17 @@
 
 <div class='profile_info'>
 <h1>{{user.username}} | Followers: {{followers}} | Following: {{following}}</h1>
-<button type='submit' action='{% url 'profile' user.username %}' method='post' class='follow_button'>Follow</button>
+{% if follow %}
+<form display='none' id='follow_form'>
+  <input name='follow' value='unfollow' type='hidden' disabled>
+</form>
+<button form='follow_form' type='submit' action='{% url 'profile' user.username %}' method='put' class='follow_button'>Unfollow</button>
+{% else %}
+<form display='none' id='follow_form'>
+  <input name='follow' value='follow' type='hidden' disabled>
+</form>
+<button form='follow_form' type='submit' action='{% url 'profile' user.username %}' method='put' class='follow_button'>Follow</button>
+{% endif %}
 </div>
 
 

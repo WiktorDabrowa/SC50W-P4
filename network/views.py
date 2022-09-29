@@ -79,17 +79,37 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
-def profile_page(request, user_name):
-    if request.method == 'POST':
-        print('Here')
-    user = User.objects.get(username=user_name)
+def profile_page(request, user_id):
+    user = User.objects.get(id=user_id)
     followers = len(user.followers.all())
     following = len(user.is_following.all())
     posts = user.posts.all()
+    if request.method == 'PUT':
+        print('Here')
+        return HttpResponse(status=204)
+    if request.user in user.followers.all():
+        follow = True
+    else:
+        follow = False
     context = {
         'user':user,
         'followers':followers,
         'following':following,
-        'posts':posts
+        'posts':posts,
+        'follow':follow,
     }
     return render(request, 'network/profile.html', context)
+
+def follow(request,user_id):
+    if request.method == 'PUT':
+        following = request.user
+        followed = User.objects.get(id = user_id)
+        followed.followers.add(following)
+        following.is_following.add(followed)
+        return 
+def unfollow(request,user_id):
+    if request.method == 'PUT':
+        following = request.user
+        followed = User.objects.get(id = user_id)
+        followed.followers.remove(following)
+        following.is_following.remove(followed)
