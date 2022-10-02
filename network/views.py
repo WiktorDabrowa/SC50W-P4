@@ -1,9 +1,11 @@
+from sqlite3 import Timestamp
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 import json
+from django.core.paginator import Paginator
 
 from .models import User, Post
 from .forms import PostForm
@@ -20,10 +22,13 @@ def index(request):
             print('Succes')
             return HttpResponseRedirect(reverse("index")) 
             
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-timestamp')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
        'post_form': post_form,
-       'posts': posts
+       'page_obj': page_obj
     }
     return render(request, "network/index.html", context)
 
@@ -83,7 +88,10 @@ def profile_page(request, user_id):
     user = User.objects.get(id=user_id)
     followers = len(user.followers.all())
     following = len(user.is_following.all())
-    posts = user.posts.all()
+    posts = user.posts.all().order_by('-timestamp')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     # Checking to see if follow button should be displayed
     same_user = False
     if request.user == user:
@@ -97,9 +105,9 @@ def profile_page(request, user_id):
         'user':user,
         'followers':followers,
         'following':following,
-        'posts':posts,
         'follow':follow,
-        'same_user': same_user
+        'same_user': same_user,
+        'page_obj':page_obj
     }
     # Follow/Unfollow:
     if request.method == 'PUT':
@@ -132,9 +140,12 @@ def following(request):
         
     user = request.user
     following = user.is_following.all()
-    posts = Post.objects.get(id in following)
+    posts = Post.objects.filter(poster__in=following).order_by('-timestamp')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'post_form': post_form,
-        'posts': posts
+        'page_obj': page_obj
     }
     return render(request,'network/index.html', context)

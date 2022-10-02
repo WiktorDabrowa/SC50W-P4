@@ -4,7 +4,8 @@
 {% block body %}
 <div id='user_id' class='hidden'>{{user.id}}</div>
 <div class='profile_info'>
-<h1>{{user.username}} | Followers: {{followers}} | Following: {{following}}</h1>
+<h1>{{user.username}}</h1>
+<p>Followers: {{followers}} | Following: {{following}}</p>
 {% if not same_user %}
   {% if follow %}
   {% csrf_token %}
@@ -18,7 +19,7 @@
 
 
 <div id='feed'>
-{% for post in posts %}
+{% for post in page_obj %}
   <div class='post'>
       <div class='poster'>
           <p class='poster_text'>
@@ -34,9 +35,29 @@
       <div class='post_likes'>
           <button class='like_button' id='like_button_'>Like</button>
           <p class='likes'>{{post.likes}}</p>
+          {% if request.user == post.poster %}
+          <button class='edit_button' id='edit_button_{{ post.id }}'>Edit Post</button>
+          {% endif %}
       </div>
   </div>
 {% endfor %}
+<div class="pagination">
+  <span class="step-links">
+      {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
 </div>
 
 {% endblock %}

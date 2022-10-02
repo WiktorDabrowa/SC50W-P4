@@ -49,6 +49,7 @@ hr {
   display: flex;
   flex-direction: column;
   background-color: whitesmoke;
+  margin-bottom: 100px;
 }
 .post {
   background-color: white;
@@ -65,7 +66,6 @@ hr {
 .poster{
   font-size: smaller;
   margin-bottom: none;
-
 }
 .poster_text {
   margin-bottom: 0;
@@ -74,7 +74,7 @@ hr {
   font-size: larger;
 }
 .post_body_text {
-  margin: 0 0 0 0;
+  margin: 0 0 20px 0;
 }
 .post_likes {
   bottom:0px;
@@ -125,7 +125,31 @@ hr {
 
 .profile_info {
   display:block;
-  height: 100px;
+  height: 150px;
   width:100%;
-  background-color: aquamarine;
+  padding: 0 50px 0 50px;
+}
+
+.follow_button{
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(80, 80, 255);
+  color: white;
+  transition-duration: 0.5s;
+}
+
+.follow_button:hover {
+  background-color: blue;
+}
+
+.follow_button:active {
+  transform: scale(1.25);
+  opacity: 0.7;
+}
+.edit_button {
+  position: absolute;
+  right: 10px;
+  bottom: 7px;
+  border: none;
+  border-radius: 5px;
 }
