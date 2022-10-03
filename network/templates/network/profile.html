@@ -1,5 +1,8 @@
 {% extends "network/layout.html" %}
-
+{% load static %}
+{% block script %}
+<script src="{% static 'network/script_profile.js' %}"></script>
+{% endblock %}
 
 {% block body %}
 <div id='user_id' class='hidden'>{{user.id}}</div>

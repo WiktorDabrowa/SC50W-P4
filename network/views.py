@@ -1,7 +1,7 @@
-from sqlite3 import Timestamp
+
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 import json
@@ -149,3 +149,13 @@ def following(request):
         'page_obj': page_obj
     }
     return render(request,'network/index.html', context)
+
+def edit(request,post_id):
+    post = Post.objects.get(id=post_id)
+    if request.user == post.poster:
+        data = json.loads(request.body)
+        post.body = data['body']
+        post.save()
+        return HttpResponseRedirect(reverse("index")) 
+    else:
+        return JsonResponse({'body': 'false'})
