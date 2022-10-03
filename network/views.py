@@ -21,7 +21,6 @@ def index(request):
             form.save()
             print('Succes')
             return HttpResponseRedirect(reverse("index")) 
-            
     posts = Post.objects.all().order_by('-timestamp')
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
@@ -159,3 +158,12 @@ def edit(request,post_id):
         return HttpResponseRedirect(reverse("index")) 
     else:
         return JsonResponse({'body': 'false'})
+    
+def like (request, post_id):
+    print(request.method)
+    if request.method == 'PUT':
+        post = Post.objects.get(id=post_id)
+        user = request.user
+        post.likes.add(user)
+        print('OK')
+        return HttpResponse('OK')

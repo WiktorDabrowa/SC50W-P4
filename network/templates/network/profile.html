@@ -36,8 +36,8 @@
       </div>
       <hr>
       <div class='post_likes'>
-          <button class='like_button' id='like_button_'>Like</button>
-          <p class='likes'>{{post.likes}}</p>
+          <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+          <p class='likes' id='likes_{{post.id}}'>{{post.likes.all.count}}</p>
           {% if request.user == post.poster %}
           <button class='edit_button' id='edit_button_{{ post.id }}'>Edit Post</button>
           {% endif %}

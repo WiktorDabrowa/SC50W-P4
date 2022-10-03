@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.edit_button').forEach(button =>
   button.addEventListener('click', () => edit_post(button.id.slice(12)))
    )
+  document.querySelectorAll('.like_button').forEach(button =>
+  button.addEventListener('click', () => like_post(button.id.slice(12)))
+     )
 })
 
 
@@ -78,7 +81,21 @@ function edit_post(id) {
         alert('You cannot change someone else`s post!')
       }
     })
-    
   }
   )
+}
+
+function like_post(post_id) {
+  csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  fetch (`like/${post_id}`, {
+    method:'PUT',
+    headers: {'X-CSRFToken': csrftoken},
+    body: JSON.stringify ({
+      liked: true
+    })
+  });
+  console.log('HERE')
+  let likes = document.querySelector(`#likes_${post_id}`).innerHTML
+  likes ++ 
+  document.querySelector(`#likes_${post_id}`).innerHTML = likes
 }
