@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.like_button').forEach(button =>
   button.addEventListener('click', () => like_post(button.id.slice(12)))
      )
+
 })
-
-
+let edited_posts = new Set()
+let previous_data = {}
 
 
 function follow(id) {
@@ -35,20 +36,30 @@ function unfollow(id) {
   location.reload()
 }
 
-function edit_post(id) {
+function edit_post(post_id) {
   // Create new HTML elements and assign variables
-  const current_text = document.querySelector(`#post_${id}`).innerHTML;
+  const current_post = document.querySelector(`#post_${post_id}`);
+  const current_text = document.querySelector(`#post_${post_id}`).innerHTML;
   const text_area = document.createElement('textarea');
-  const div = document.querySelector(`#post_div_${id}`);
+  const div = document.querySelector(`#post_div_${post_id}`);
   const edit_button = document.createElement('button');
+  console.log(current_post)
+  previous_data.current_post = current_post;
+  previous_data.current_text =  current_text;
+  previous_data.div = div
+
+  // Cancel all of the previous editions
+  edited_posts.forEach(cancel_edit)
+  // Add post_id to edited_posts array
+  edited_posts.add(`${post_id}`)
 
   // Assign classes and attributes
   text_area.classList.add('edit_textarea');
-  text_area.setAttribute('id', `textarea_${id}`);
+  text_area.setAttribute('id', `textarea_${post_id}`);
   text_area.style.resize = 'none';
   text_area.style.width = '100%';
   text_area.style.height = '150px';
-  edit_button.setAttribute('id', `edit_button_${id}`);
+  edit_button.setAttribute('id', `edit_button_${post_id}`);
   text_area.innerHTML = current_text;
   edit_button.innerHTML = 'Edit and Save';
   edit_button.classList.add('edit_button');
@@ -59,7 +70,7 @@ function edit_post(id) {
   edit_button.style.color = 'white';
 
   // Set elements in document
-  document.querySelector(`#post_${id}`).remove();
+  document.querySelector(`#post_${post_id}`).style.display = 'none';
   div.append(text_area)
   div.append(edit_button)
   
@@ -67,7 +78,7 @@ function edit_post(id) {
   edit_button.addEventListener('click', function(){
     csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     body = text_area.value
-    fetch (`edit/${id}`, {
+    fetch (`edit/${post_id}`, {
       method: 'PUT',
       headers: {'X-CSRFToken': csrftoken},
       body: JSON.stringify({
@@ -83,6 +94,14 @@ function edit_post(id) {
     })
   }
   )
+  function cancel_edit(post_id) {
+    document.querySelector(`#textarea_${post_id}`).remove()
+    document.querySelector(`#edit_button_${post_id}`).remove()
+    console.log('here')
+    document.querySelector(`#post_${post_id}`).style.display = 'block'
+    console.log('here2')
+    edited_posts.clear()
+  }
 }
 
 function like_post(post_id) {
