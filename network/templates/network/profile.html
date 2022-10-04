@@ -36,7 +36,13 @@
       </div>
       <hr>
       <div class='post_likes'>
+        {% if request.user.is_authenticated %}
+          {% if request.user in post.likes.all %}
+          <button class='like_button' id='like_button_{{post.id}}'>Unlike</button>
+          {% elif request.user not in post.likes.all %}
           <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+          {% endif %}
+        {% endif %}
           <p class='likes' id='likes_{{post.id}}'>{{post.likes.all.count}}</p>
           {% if request.user == post.poster %}
           <button class='edit_button' id='edit_button_{{ post.id }}'>Edit Post</button>

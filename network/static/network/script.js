@@ -87,15 +87,32 @@ function edit_post(id) {
 
 function like_post(post_id) {
   csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-  fetch (`like/${post_id}`, {
-    method:'PUT',
-    headers: {'X-CSRFToken': csrftoken},
-    body: JSON.stringify ({
-      liked: true
+  button = document.querySelector(`#like_button_${post_id}`)
+  if ( button.innerHTML.trim() === 'Like') {
+    fetch (`like/${post_id}`, {
+      method:'PUT',
+      headers: {'X-CSRFToken': csrftoken},
+      body: JSON.stringify ({
+        liked: 'true'
+      })
+    });
+    let likes = document.querySelector(`#likes_${post_id}`).innerHTML
+    likes ++ 
+    document.querySelector(`#likes_${post_id}`).innerHTML = likes
+    document.querySelector(`#like_button_${post_id}`).innerHTML = 'Unlike'
+  } else {
+    fetch (`like/${post_id}`, {
+      method:'PUT',
+      headers: {'X-CSRFToken': csrftoken},
+      body: JSON.stringify ({
+        liked: 'false'
+      })
     })
-  });
+    let likes = document.querySelector(`#likes_${post_id}`).innerHTML
+    likes -- 
+    document.querySelector(`#likes_${post_id}`).innerHTML = likes
+    document.querySelector(`#like_button_${post_id}`).innerHTML = 'Like'
+  };
   console.log('HERE')
-  let likes = document.querySelector(`#likes_${post_id}`).innerHTML
-  likes ++ 
-  document.querySelector(`#likes_${post_id}`).innerHTML = likes
+  
 }

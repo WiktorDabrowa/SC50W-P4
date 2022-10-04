@@ -1,6 +1,7 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+    {% if type == 'index' %}
     <div id="post_form_container">
         <form action='' method='post' id='post_form_html'>
             {% csrf_token %}
@@ -8,6 +9,7 @@
             <input type='submit' value="Post" id='post_button'>
         </form>
     </div>
+    {% endif %}
     <div id='feed'>
     {% for post in page_obj %}
         <div class='post'>
@@ -23,7 +25,13 @@
             </div>
             <hr>
             <div class='post_likes'>
-                <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+                {% if request.user.is_authenticated %}
+                    {% if request.user in post.likes.all %}
+                    <button class='like_button' id='like_button_{{post.id}}'>Unlike</button>
+                    {% elif request.user not in post.likes.all %}
+                    <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+                    {% endif %}
+                {% endif %}
                 <p class='likes' id='likes_{{post.id}}'>{{ post.likes.all.count }}</p>
                 {% if request.user == post.poster %}
                 <button class='edit_button' id='edit_button_{{ post.id }}'>Edit Post</button>

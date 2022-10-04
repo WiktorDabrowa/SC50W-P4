@@ -27,7 +27,8 @@ def index(request):
     page_obj = paginator.get_page(page_number)
     context = {
        'post_form': post_form,
-       'page_obj': page_obj
+       'page_obj': page_obj,
+       'type':'index'
     }
     return render(request, "network/index.html", context)
 
@@ -106,7 +107,7 @@ def profile_page(request, user_id):
         'following':following,
         'follow':follow,
         'same_user': same_user,
-        'page_obj':page_obj
+        'page_obj':page_obj,
     }
     # Follow/Unfollow:
     if request.method == 'PUT':
@@ -145,7 +146,8 @@ def following(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'post_form': post_form,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        
     }
     return render(request,'network/index.html', context)
 
@@ -160,10 +162,15 @@ def edit(request,post_id):
         return JsonResponse({'body': 'false'})
     
 def like (request, post_id):
-    print(request.method)
     if request.method == 'PUT':
+        data = json.loads(request.body)
         post = Post.objects.get(id=post_id)
         user = request.user
-        post.likes.add(user)
+        if data.get("liked") == 'true':
+            print('post liked')
+            post.likes.add(user)
+        elif data.get("liked") == 'false':
+            print('post unliked')
+            post.likes.remove(user)
         print('OK')
         return HttpResponse('OK')

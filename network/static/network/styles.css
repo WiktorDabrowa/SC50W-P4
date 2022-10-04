@@ -19,7 +19,6 @@ hr {
   height: 50px;
   display:block;
   border-bottom:none;
-  
 }
 #post_form_html {
   display:flex;
@@ -72,7 +71,7 @@ hr {
 }
 .post_body {
   font-size: larger;
-  position:relative
+  position:relative;
 }
 .post_body_text {
   margin: 0 0 20px 0;
@@ -110,7 +109,7 @@ hr {
 }
 .likes {
   position:absolute;
-  left:30px;
+  left:45px;
   padding-left:5px;
 }
 .profile_link {
