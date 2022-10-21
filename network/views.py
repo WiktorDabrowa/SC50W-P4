@@ -2,10 +2,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
 import json
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 from .models import User, Post
 from .forms import PostForm
@@ -84,6 +85,7 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+@login_required(login_url = 'login')
 def profile_page(request, user_id):
     user = User.objects.get(id=user_id)
     followers = len(user.followers.all())
@@ -126,6 +128,8 @@ def profile_page(request, user_id):
         return render(request, 'network/profile.html', context)
     return render(request, 'network/profile.html', context)
 
+
+@login_required(login_url = 'login')
 def following(request):
     post_form = PostForm()
     # Proccesing new posts
@@ -151,6 +155,7 @@ def following(request):
     }
     return render(request,'network/index.html', context)
 
+@login_required(login_url = 'login')
 def edit(request,post_id):
     post = Post.objects.get(id=post_id)
     if request.user == post.poster:
@@ -161,6 +166,7 @@ def edit(request,post_id):
     else:
         return JsonResponse({'body': 'false'})
     
+@login_required(login_url = 'login')
 def like (request, post_id):
     if request.method == 'PUT':
         data = json.loads(request.body)

@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 let edited_posts = new Set()
-let previous_data = {}
 
 
 function follow(id) {
@@ -44,9 +43,6 @@ function edit_post(post_id) {
   const div = document.querySelector(`#post_div_${post_id}`);
   const edit_button = document.createElement('button');
   console.log(current_post)
-  previous_data.current_post = current_post;
-  previous_data.current_text =  current_text;
-  previous_data.div = div
 
   // Cancel all of the previous editions
   edited_posts.forEach(cancel_edit)
@@ -127,7 +123,7 @@ function like_post(post_id) {
         liked: 'false'
       })
     })
-    let likes = document.querySelector(`#likes_${post_id}`).innerHTML
+     let likes = document.querySelector(`#likes_${post_id}`).innerHTML
     likes -- 
     document.querySelector(`#likes_${post_id}`).innerHTML = likes
     document.querySelector(`#like_button_${post_id}`).innerHTML = 'Like'

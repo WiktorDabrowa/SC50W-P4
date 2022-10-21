@@ -21,41 +21,44 @@
             </div>
             <hr>
             <div class='post_body' id='post_div_{{ post.id }}'>
-                <p class='post_body_text' id='post_{{ post.id }}'>{{post.body}}</p>
+                <p class='post_body_text' id='post_{{ post.id }}'>{{post.body|linebreaksbr}}</p>
             </div>
             <hr>
             <div class='post_likes'>
                 {% if request.user.is_authenticated %}
                     {% if request.user in post.likes.all %}
-                    <button class='like_button' id='like_button_{{post.id}}'>Unlike</button>
-                    {% elif request.user not in post.likes.all %}
-                    <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+                        <button class='like_button' id='like_button_{{post.id}}'>Unlike</button>
+                        <p class='likes' id='likes_{{post.id}}'>{{ post.likes.all.count }}</p>
+                        {% elif request.user not in post.likes.all %}
+                        <button class='like_button' id='like_button_{{post.id}}'>Like</button>
+                        <p class='likes' id='likes_{{post.id}}'>{{ post.likes.all.count }}</p>
                     {% endif %}
+                {% else %}
+                    <p class='likes' id='likes_{{post.id}}' style ="position:static/">{{ post.likes.all.count }}</p>
                 {% endif %}
-                <p class='likes' id='likes_{{post.id}}'>{{ post.likes.all.count }}</p>
                 {% if request.user == post.poster %}
                 <button class='edit_button' id='edit_button_{{ post.id }}'>Edit Post</button>
                 {% endif %}
             </div>
         </div>
     {% endfor %}
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    <nav aria-label="Posts page navigation ">
+        <ul class="pagination">
+            {% if page_obj.has_previous%}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
             {% endif %}
-    
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-    
+            <li class="page-item active"><span class="page-link" href="#">{{ page_obj.number }}</a></li>
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number}}</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Next</a></li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
             {% endif %}
-        </span>
-    </div>
+        </ul>
+    </nav>
     </div>
 
 {% endblock %}

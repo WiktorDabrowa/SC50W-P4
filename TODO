@@ -17,7 +17,6 @@
 6. EDIT POST -> JavaScript
   (on every post/post -> textarea
   ensure only OP can edit)
-  
 7. likes
   (JS -> no page reload)
 

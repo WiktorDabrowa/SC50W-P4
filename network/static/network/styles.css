@@ -5,6 +5,26 @@ hr {
 .hidden {
   display: none;
 }
+.navbar-light .navbar-brand{
+  color:rgb(80, 80, 255)
+}
+.page-item.active .page-link{
+  background-color:rgb(80, 80, 255);
+  border-color:rgb(80, 80, 255);
+}
+.page-link{
+  color: rgb(80, 80, 255);
+  transition: 0.5s;
+}
+.page-link:hover{
+  background-color: rgb(80, 80, 255);
+  opacity:0.8;
+  color:white
+}
+.page-link:active{
+  background-color: rgb(80, 80, 255);
+  color:white
+}
 #post_form_container {
   padding: 20px;
   justify-content: center;
@@ -19,6 +39,7 @@ hr {
   height: 50px;
   display:block;
   border-bottom:none;
+  text-align: center;
 }
 #post_form_html {
   display:flex;
@@ -32,23 +53,25 @@ hr {
   border:1px solid gray;
   border-top:none;
   position: relative;
-
+  background-color: rgb(80, 80, 255);
+  color:white
 }
 #id_body:focus {
   width: 500px;
   height: 200px;
   font-size:larger;
   padding: 10px 30px 10px 30px;
-  outline:none
+  outline:none;
+  text-align:left;
 }
 #feed {
-  padding:0 300px 0 300px;
+  padding:0 300px 10px 300px;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
   background-color: whitesmoke;
-  margin-bottom: 100px;
+  margin-bottom:0;
 }
 .post {
   background-color: white;
@@ -58,23 +81,28 @@ hr {
   min-height: 100px;
   margin:10px;
   overflow-wrap: break-word;
-  padding: 5px 10px 0 10px;
   border-radius:7px;
-  border: 1px solid gray;
+  padding:none;
 }
 .poster{
   font-size: smaller;
   margin-bottom: none;
+  background-color: rgb(80, 80, 255);
+  border-radius: 7px 7px 0 0 ;
+  padding: 5px;
 }
 .poster_text {
   margin-bottom: 0;
+  color:white
 }
 .post_body {
   font-size: larger;
   position:relative;
+  padding: 0 10px 0 10px;
 }
 .post_body_text {
   margin: 0 0 20px 0;
+  white-space: pre-wrap;
 }
 .post_likes {
   bottom:0px;
@@ -89,37 +117,39 @@ hr {
   border:none;
   border-radius:0 5px 0 5px;
   position:absolute;
-  left:-10px;
+  left:0;
   background-color: transparent;
   transition-duration: 0.5s;
+  bottom: 7px
 }
 .like_button:hover {
   transform: scale(1.10);
-  color: blue;
-  border: none
+  color: rgb(80, 80, 255);
+  border: none;
 }
 .like_button:active {
   transform: scale(1.25);
-  color: blue;
-  border: none;
-  outline: 0;
+  color: rgb(80, 80, 255);
+  outline: none
+  
 }
 .like_button:focus {
   outline: none;
 }
 .likes {
   position:absolute;
-  left:45px;
+  left:55px;
   padding-left:5px;
+  bottom: -10px
 }
+
 .profile_link {
-  color:black;
+  color:white;
   transition-duration: 0.5s;
 }
 .profile_link:hover {
-  color:black;
   text-decoration: none;
-  color:blue;
+  color:palegoldenrod;
   transform: scale(2);
 }
 
@@ -139,7 +169,7 @@ hr {
 }
 
 .follow_button:hover {
-  background-color: blue;
+  opacity: 0.8;
 }
 
 .follow_button:active {
@@ -152,4 +182,14 @@ hr {
   bottom: 7px;
   border: none;
   border-radius: 5px;
+  transition-duration: 00.5s;
+}
+.edit_button:hover {
+  background-color: rgb(80, 80, 255);
+  color:white
+}
+.edit_button:active{
+  outline:none;
+  background-color: rgb(80, 80, 255);
+  color:white
 }
